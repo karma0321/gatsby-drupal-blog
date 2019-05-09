@@ -27,7 +27,7 @@ const BlogPost = ({ data }) => {
           </ul>
         }
       </article>
-      <Link to="/articles/">Go to Article</Link><br />
+      <Link to="/blog/">Go to Blog</Link><br />
       <Link to="/">Go to Homepage</Link>
     </Layout>
   )
