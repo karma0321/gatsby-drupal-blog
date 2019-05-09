@@ -13,7 +13,9 @@ const Blog = ({data}) => (
     {data.allNodeArticle.edges.map(({node}, i) => (
       <div className={`list-element`} key={i}>
           <h2>{node.title}</h2>
-          <Img fluid={node.relationships.field_image.localFile.childImageSharp.fluid}/>
+          {node.relationships.field_image && node.relationships.field_image.localFile.childImageSharp &&
+            <Img fluid={node.relationships.field_image.localFile.childImageSharp.fluid}/>
+          }
         <p><i>{ node.created }</i></p>
         <p dangerouslySetInnerHTML={{ __html: node.body.processed.slice(0, 500).concat('...') }} />
         { node.relationships.field_tags &&
@@ -38,9 +40,6 @@ export const query = graphql`
           id
           title
           created(formatString: "MMM DD, YYYY")
-          path{
-            alias
-          }
           body{
             value
             format
