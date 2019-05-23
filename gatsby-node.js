@@ -8,10 +8,10 @@
 const path = require(`path`)
 const transliteration = require('transliteration')
 
-// Create a slug for each article and set it as a field on the node.
+// Create a slug for each blog post and set it as a field on the node.
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-  if (node.internal.type === `node__article`) {
+  if (node.internal.type === `node__blog`) {
     const slugFragment = transliteration.slugify(node.title)
     const slug = `/blog/${slugFragment}/`
     createNodeField({
@@ -29,12 +29,12 @@ exports.createPages = ({ actions, graphql }) => {
 
   return new Promise((resolve, reject) => {
     const postTemplate = path.resolve(`src/templates/BlogPost.js`)
-    // Query for article nodes to use in creating pages.
+    // Query for blog nodes to use in creating pages.
     resolve(
       graphql(
         `
           {
-            allNodeArticle {
+            allNodeBlog {
               edges {
                 node {
                   title
@@ -51,8 +51,8 @@ exports.createPages = ({ actions, graphql }) => {
           reject(result.errors)
         }
 
-        // Create pages for each article.
-        result.data.allNodeArticle.edges.forEach(({ node }) => {
+        // Create pages for each Blog post.
+        result.data.allNodeBlog.edges.forEach(({ node }) => {
           createPage({
             path: node.fields.slug,
             component: postTemplate,

@@ -10,19 +10,19 @@ const Blog = ({data}) => (
   <Layout>
     <SEO title="Blog" keywords={[`drupal`, `gatsby`, `article`]} />
     <h1>Blog page</h1>
-    {data.allNodeArticle.edges.map(({node}, i) => (
+    {data.allNodeBlog.edges.map(({node}, i) => (
       <div className={`list-element`} key={i}>
         <Link to={node.fields.slug}>
           <h2>{node.title}</h2>
         </Link>
-          {node.relationships.field_image && node.relationships.field_image.localFile.childImageSharp &&
-            <Img fluid={node.relationships.field_image.localFile.childImageSharp.fluid}/>
+          {node.relationships.field_blog_image && node.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp &&
+            <Img fluid={node.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp.fluid}/>
           }
         <p><i>{ node.created }</i></p>
         <p dangerouslySetInnerHTML={{ __html: node.body.processed.slice(0, 500).concat('...') }} />
-        { node.relationships.field_tags &&
+        { node.relationships.field_blog_tags &&
           <ul>
-            {node.relationships.field_tags.map(({ name }, k) => (
+            {node.relationships.field_blog_tags.map(({ name }, k) => (
               <li key={k}>#{name} </li>
             ))}
           </ul>
@@ -34,43 +34,49 @@ const Blog = ({data}) => (
 )
 
 export const query = graphql`
-  query allNodeArticle{
-    allNodeArticle(limit: 10, skip: 0){
-      totalCount
-      edges{
-        node{
-          id
-          title
-          created(formatString: "MMM DD, YYYY")
-          fields{
-            slug
+  query allNodeBlog{
+  allNodeBlog(limit: 10, skip: 0){
+    totalCount
+    edges{
+      node{
+        id
+        title
+        created(formatString: "MMM DD, YYYY")
+        fields {
+          slug
+        }
+        # path{
+        #   alias
+        # }
+        body{
+          value
+          format
+          processed
+          summary
+        }
+        relationships{
+          field_blog_tags{
+            name
           }
-          body{
-            value
-            format
-            processed
-            summary
-          }
-          relationships{
-          	field_tags{
-              name
-            }
-          	field_image{
-              filename
-              localFile{
-                childImageSharp{
-                  fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
-                  	src
+          field_blog_image{
+            name
+            relationships{
+              field_media_image{
+                filename
+                localFile{
+                  childImageSharp{
+                    fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
+                    src
                     ...GatsbyImageSharpFluid_noBase64
+                    }
                   }
                 }
-                relativePath
-                absolutePath
               }
             }
           }
         }
       }
     }
+  }
 }`
 export default Blog

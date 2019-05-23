@@ -5,23 +5,22 @@ import SEO from "../components/seo"
 import Img from 'gatsby-image'
 
 const BlogPost = ({ data }) => {
-  const tags = data.nodeArticle.relationships.field_tags.map(({ name }) => name)
+  const tags = data.nodeBlog.relationships.field_blog_tags.map(({ name }) => name)
 
   return (
     <Layout>
-      <SEO title={data.nodeArticle.title.concat(' | Article')} keywords={tags} />
-      <h1>{data.nodeArticle.title}</h1>
+      <SEO title={data.nodeBlog.title.concat(' | Article')} keywords={tags} />
+      <h1>{data.nodeBlog.title}</h1>
       <article>
-        <p className="publication-date"><i>{data.nodeArticle.created}</i></p>
-      {console.log(data.nodeArticle.relationships.field_image)}
-        {data.nodeArticle.relationships.field_image &&
-          data.nodeArticle.relationships.field_image.localFile.childImageSharp !== null &&
-          <Img fluid={data.nodeArticle.relationships.field_image.localFile.childImageSharp.fluid} />
+        <p className="publication-date"><i>{data.nodeBlog.created}</i></p>
+        {data.nodeBlog.relationships.field_blog_image.relationships.field_media_image &&
+          data.nodeBlog.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp !== null &&
+          <Img fluid={data.nodeBlog.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp.fluid} />
         }
-        <p dangerouslySetInnerHTML={{__html: data.nodeArticle.body.processed}} />
-        { data.nodeArticle.relationships.field_tags &&
+        <p dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
+        { data.nodeBlog.relationships.field_blog_tags &&
           <ul>
-            {data.nodeArticle.relationships.field_tags.map(({ name }, k) => (
+            {data.nodeBlog.relationships.field_blog_tags.map(({ name }, k) => (
               <li key={k}>#{name} </li>
             ))}
           </ul>
@@ -36,7 +35,7 @@ export default BlogPost
 
 export const query = graphql`
   query($slug: String!) {
-    nodeArticle (fields: { slug: { eq: $slug } }) {
+    nodeBlog (fields: { slug: { eq: $slug } }) {
       title
       created(formatString: "MMM DD, YYYY")
       changed
@@ -45,20 +44,23 @@ export const query = graphql`
         summary
       }
       relationships{
-        field_tags{
+        field_blog_tags{
           name
         }
-        field_image{
-          filename
-          localFile{
-            childImageSharp{
-              fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
-                src
-                ...GatsbyImageSharpFluid_noBase64
+        field_blog_image{
+          name
+          relationships{
+            field_media_image{
+              filename
+              localFile{
+                childImageSharp{
+                  fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
+                  src
+                  ...GatsbyImageSharpFluid_noBase64
+                  }
+                }
               }
             }
-            relativePath
-            absolutePath
           }
         }
       }
