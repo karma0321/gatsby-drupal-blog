@@ -15,8 +15,8 @@ const Blog = ({data}) => (
         <Link to={node.fields.slug}>
           <h2>{node.title}</h2>
         </Link>
-          {node.relationships.field_blog_image && node.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp &&
-            <Img fluid={node.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp.fluid}/>
+          {node.relationships.field_blog_image && node.relationships.field_blog_image.localFile.childImageSharp &&
+            <Img fluid={node.relationships.field_blog_image.localFile.childImageSharp.fluid}/>
           }
         <p><i>{ node.created }</i></p>
         <p dangerouslySetInnerHTML={{ __html: node.body.processed.slice(0, 500).concat('...') }} />
@@ -59,18 +59,13 @@ export const query = graphql`
             name
           }
           field_blog_image{
-            name
-            relationships{
-              field_media_image{
-                filename
-                localFile{
-                  childImageSharp{
-                    fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
-                    src
-                    ...GatsbyImageSharpFluid_noBase64
-                    }
-                  }
-                }
+            filename
+            localFile{
+              childImageSharp{
+                fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
+                src
+                ...GatsbyImageSharpFluid_noBase64
+                }  
               }
             }
           }

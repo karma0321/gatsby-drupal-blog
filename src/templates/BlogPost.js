@@ -13,9 +13,10 @@ const BlogPost = ({ data }) => {
       <h1>{data.nodeBlog.title}</h1>
       <article>
         <p className="publication-date"><i>{data.nodeBlog.created}</i></p>
-        {data.nodeBlog.relationships.field_blog_image.relationships.field_media_image &&
-          data.nodeBlog.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp !== null &&
-          <Img fluid={data.nodeBlog.relationships.field_blog_image.relationships.field_media_image.localFile.childImageSharp.fluid} />
+      {console.log(data.nodeBlog.relationships.field_blog_image)}
+        {data.nodeBlog.relationships.field_blog_image &&
+          data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp !== null &&
+          <Img fluid={data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp.fluid} />
         }
         <p dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
         { data.nodeBlog.relationships.field_blog_tags &&
@@ -48,19 +49,16 @@ export const query = graphql`
           name
         }
         field_blog_image{
-          name
-          relationships{
-            field_media_image{
-              filename
-              localFile{
-                childImageSharp{
-                  fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
-                  src
-                  ...GatsbyImageSharpFluid_noBase64
-                  }
-                }
+          filename
+          localFile{
+            childImageSharp{
+              fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
+                src
+                ...GatsbyImageSharpFluid_noBase64
               }
             }
+            relativePath
+            absolutePath
           }
         }
       }
