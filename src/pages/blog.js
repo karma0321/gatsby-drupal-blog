@@ -35,37 +35,35 @@ const Blog = ({data}) => (
 
 export const query = graphql`
   query allNodeBlog{
-  allNodeBlog(limit: 10, skip: 0){
-    totalCount
-    edges{
-      node{
-        id
-        title
-        created(formatString: "MMM DD, YYYY")
-        fields {
-          slug
-        }
-        # path{
-        #   alias
-        # }
-        body{
-          value
-          format
-          processed
-          summary
-        }
-        relationships{
-          field_blog_tags{
-            name
+    allNodeBlog(limit: 10, skip: 0){
+      totalCount
+      edges{
+        node{
+          id
+          title
+          created(formatString: "MMM DD, YYYY")
+          fields {
+            slug
           }
-          field_blog_image{
-            filename
-            localFile{
-              childImageSharp{
-                fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
-                src
-                ...GatsbyImageSharpFluid_noBase64
-                }  
+          body{
+            value
+            format
+            processed
+            summary
+          }
+          relationships{
+            field_blog_tags{
+              name
+            }
+            field_blog_image{
+              filename
+              localFile{
+                childImageSharp{
+                  fluid(sizes: "(max-width: 1200px) 100vw, 800px") {
+                  src
+                  ...GatsbyImageSharpFluid_noBase64
+                  }
+                }
               }
             }
           }
@@ -73,5 +71,6 @@ export const query = graphql`
       }
     }
   }
-}`
+`
+
 export default Blog
