@@ -13,7 +13,6 @@ const BlogPost = ({ data }) => {
       <h1>{data.nodeBlog.title}</h1>
       <article>
         <p className="publication-date"><i>{data.nodeBlog.created}</i></p>
-      {console.log(data.nodeBlog.relationships.field_blog_image)}
         {data.nodeBlog.relationships.field_blog_image &&
           data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp !== null &&
           <Img fluid={data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp.fluid} />
