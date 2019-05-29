@@ -17,7 +17,12 @@ const BlogPost = ({ data }) => {
           data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp !== null &&
           <Img fluid={data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp.fluid} />
         }
-        <p dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
+        {data.nodeArticle.fields.markdownBody
+          ?
+          <div dangerouslySetInnerHTML={{__html: data.nodeArticle.fields.markdownBody.childMarkdownRemark.html}} />
+          :
+          <div dangerouslySetInnerHTML={{__html: data.nodeArticle.body.processed}} />
+        }
         { data.nodeBlog.relationships.field_blog_tags &&
           <ul>
             {data.nodeBlog.relationships.field_blog_tags.map(({ name }, k) => (

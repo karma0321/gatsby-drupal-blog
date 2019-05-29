@@ -40,6 +40,12 @@ exports.createPages = ({ actions, graphql }) => {
                   title
                   fields {
                     slug
+                    markdownBody{
+                      childMarkdownRemark{
+                        html
+                        rawMarkdownBody
+                      }
+                    }
                   }
                 }
               }
