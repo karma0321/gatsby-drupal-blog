@@ -22,4 +22,4 @@ $ gatsby build
 
 ## Resources:
 
-Presentation slides: https://github.com/karma0321/drupal-gatsby-presentation-soulweb
+Presentation slides: https://github.com/karma0321/drupal-gatsby-presentation-soulweb/tree/opensouthcode-2019
