@@ -19,9 +19,9 @@ const BlogPost = ({ data }) => {
         }
         {data.nodeBlog.fields.markdownBody
           ?
-          <div dangerouslySetInnerHTML={{__html: data.nodeBlog.fields.markdownBody.childMarkdownRemark.html}} />
+          <p dangerouslySetInnerHTML={{__html: data.nodeBlog.fields.markdownBody.childMarkdownRemark.html}} />
           :
-          <div dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
+          <p dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
         }
         { data.nodeBlog.relationships.field_blog_tags &&
           <ul>
