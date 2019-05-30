@@ -22,4 +22,6 @@ $ gatsby build
 
 ## Resources:
 
-Presentation slides: https://github.com/karma0321/drupal-gatsby-presentation-soulweb
+- Presentation slides: https://github.com/karma0321/drupal-gatsby-presentation-soulweb/tree/opensouthcode-2019
+- Basic repo: https://github.com/karma0321/gatsby-drupal-blog/tree/opensouthcode-2019
+- With markdown content: https://github.com/karma0321/gatsby-drupal-blog/tree/opensouthcode-2019-markdown-content
