@@ -47,6 +47,26 @@ module.exports = {
         ]
       }
     },
+    {
+      resolve: `gatsby-remark-images`,
+      options: {
+        // It's important to specify the maxWidth (in pixels) of
+        // the content container as this plugin uses this as the
+        // base for generating different widths of each image.
+        maxWidth: 1000,
+        linkImagesToOriginal: true,
+        quality: 75,
+        withWebp: true,
+        wrapperStyle: fluidResult => `flex:${_.round(fluidResult.aspectRatio, 2)};`,
+      },
+    },
+    {
+      resolve: "gatsby-remark-external-links",
+      options: {
+        target: "_self",
+        rel: "nofollow"
+      }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
