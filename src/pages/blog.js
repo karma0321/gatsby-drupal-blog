@@ -35,7 +35,11 @@ const Blog = ({data}) => (
 
 export const query = graphql`
   query allNodeBlog{
-    allNodeBlog(limit: 10, skip: 0){
+    allNodeBlog(
+      limit: 10,
+      skip: 0,
+      sort: { fields: [created], order: DESC }
+    ){
       totalCount
       edges{
         node{
