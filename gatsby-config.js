@@ -41,7 +41,7 @@ module.exports = {
           {
             resolve: `@weknow/gatsby-remark-drupal`,
             options: {
-              nodes: [`article`]
+              nodes: [`blog`]
             }
           }
         ]
