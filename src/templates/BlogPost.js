@@ -17,11 +17,11 @@ const BlogPost = ({ data }) => {
           data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp !== null &&
           <Img fluid={data.nodeBlog.relationships.field_blog_image.localFile.childImageSharp.fluid} />
         }
-        {data.nodeArticle.fields.markdownBody
+        {data.nodeBlog.fields.markdownBody
           ?
-          <div dangerouslySetInnerHTML={{__html: data.nodeArticle.fields.markdownBody.childMarkdownRemark.html}} />
+          <div dangerouslySetInnerHTML={{__html: data.nodeBlog.fields.markdownBody.childMarkdownRemark.html}} />
           :
-          <div dangerouslySetInnerHTML={{__html: data.nodeArticle.body.processed}} />
+          <div dangerouslySetInnerHTML={{__html: data.nodeBlog.body.processed}} />
         }
         { data.nodeBlog.relationships.field_blog_tags &&
           <ul>
@@ -40,13 +40,25 @@ export default BlogPost
 
 export const query = graphql`
   query($slug: String!) {
-    nodeBlog (fields: { slug: { eq: $slug } }) {
+    nodeBlog (
+      fields: {
+        slug: { eq: $slug }
+      }
+    ) {
       title
       created(formatString: "MMM DD, YYYY")
       changed
       body {
         processed
         summary
+      }
+      fields{
+        markdownBody{
+          childMarkdownRemark{
+          	rawMarkdownBody
+            html
+          }
+        }
       }
       relationships{
         field_blog_tags{
