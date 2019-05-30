@@ -44,6 +44,15 @@ exports.createPages = ({ actions, graphql }) => {
                   fields {
                     slug
                   }
+                  body{
+                    processed
+                    summary
+                  }
+                  relationships{
+                  	field_blog_tags{
+                      name
+                    }
+                  }
                 }
               }
             }
@@ -53,6 +62,17 @@ exports.createPages = ({ actions, graphql }) => {
         if (result.errors) {
           reject(result.errors)
         }
+
+        // Create pages for each article.
+       createPaginatedPages({
+         edges: result.data.allNodeBlog.edges,
+         createPage: createPage,
+         pageTemplate: 'src/templates/Blog.js',
+         pageLength: 10, // This is optional and defaults to 10 if not used
+         pathPrefix: 'blog', // This is optional and defaults to an empty string if not used
+         buildPath: (index, pathPrefix) =>
+           index > 1 ? `${pathPrefix}/${index}` : `/${pathPrefix}`, // This is optional and this is the default
+       })
 
         // Create pages for each Blog post.
         result.data.allNodeBlog.edges.forEach(({ node }) => {
