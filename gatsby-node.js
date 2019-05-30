@@ -7,6 +7,7 @@
 // You can delete this file if you're not using it
 const path = require(`path`)
 const transliteration = require('transliteration')
+const createPaginatedPages = require('gatsby-paginate')
 
 // Create a slug for each blog post and set it as a field on the node.
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -34,7 +35,9 @@ exports.createPages = ({ actions, graphql }) => {
       graphql(
         `
           {
-            allNodeBlog {
+            allNodeBlog(
+              filter: { status: { eq: true } }
+            ) {
               edges {
                 node {
                   title
