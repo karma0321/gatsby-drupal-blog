@@ -15,11 +15,18 @@ const Blog = ({data}) => (
         <Link to={node.fields.slug}>
           <h2>{node.title}</h2>
         </Link>
-          {node.relationships.field_blog_image && node.relationships.field_blog_image.localFile.childImageSharp &&
-            <Img fluid={node.relationships.field_blog_image.localFile.childImageSharp.fluid}/>
-          }
         <p><i>{ node.created }</i></p>
-        <p dangerouslySetInnerHTML={{ __html: node.body.processed.slice(0, 500).concat('...') }} />
+        {node.relationships.field_blog_image && node.relationships.field_blog_image.localFile.childImageSharp &&
+          <Img fluid={node.relationships.field_blog_image.localFile.childImageSharp.fluid}/>
+        }
+
+        {node.fields.markdownBody
+          ?
+          <p dangerouslySetInnerHTML={{__html: node.fields.markdownBody.childMarkdownRemark.html}} />
+          :
+          <p dangerouslySetInnerHTML={{__html: node.body.processed}} />
+        }
+
         { node.relationships.field_blog_tags &&
           <ul>
             {node.relationships.field_blog_tags.map(({ name }, k) => (
@@ -48,10 +55,14 @@ export const query = graphql`
           created(formatString: "MMM DD, YYYY")
           fields {
             slug
+            markdownBody{
+              childMarkdownRemark{
+              	rawMarkdownBody
+                html
+              }
+            }
           }
           body{
-            value
-            format
             processed
             summary
           }
