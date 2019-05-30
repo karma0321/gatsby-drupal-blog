@@ -34,18 +34,14 @@ exports.createPages = ({ actions, graphql }) => {
       graphql(
         `
           {
-            allNodeBlog {
+            allNodeBlog(
+              filter: { status: { eq: true } }
+            ) {
               edges {
                 node {
                   title
                   fields {
                     slug
-                    markdownBody{
-                      childMarkdownRemark{
-                        html
-                        rawMarkdownBody
-                      }
-                    }
                   }
                 }
               }
