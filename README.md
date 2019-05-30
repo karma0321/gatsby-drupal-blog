@@ -1,5 +1,5 @@
 # Gatsby Drupal Blog project
-### by [SoulWeb Solutions](mailto:info@soulweb.it)
+### by [SoulWeb Solutions](https://soulweb.it)
 
 The main goal of this project is to show how to build a blog with GatsbyJS using Drupal as backend data server.
 
